@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="styles.css">
+    <title>Index</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <header>
+        <%- include('./nav.ejs', {data}) %> 
+    </header>
+    <main>
+    <% if(products != undefined ){ %>
+
+        
+        <div class="listContainer">
+            <% products.forEach(p => { %> 
+            <div class="card">
+              <h2><%- p.product_name %> </h2>
+              <h3><%- p.product_description %> </h3>
+
+              <p>Precio:<%- p.product_price %> </p>
+              <img src="<%- p.product_imgUrl %>">
+              <form action="/carrito/<%= p.id %>" method="post"><button type="submit">Agregar</button></form>
+            </div>
+           <% })  %> 
+            </div>
+            <% }else{ %>
+            <h1>Inicie sesion para ver los productos</h1>
+            <% } %>
+    </main>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="styles.css">
+    <title>cart</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <header>
+        <%- include('./nav.ejs', {data}) %> 
+    </header>
+    <main>
+    <% if(products != undefined ){ %>
+
+        
+            <div class="listContainer">
+                <% products.forEach(p => { %> 
+                <div class="card">
+                <h2><%- p.product_name %> </h2>
+                <h3><%- p.product_description %> </h3>
+
+                <p>Precio:<%- p.product_price %> </p>
+                <img src="<%- p.product_imgUrl %>">
+                </div>
+           <% })  %> 
+           <br>
+           <a href="./">VOLVER</a>
+        </div>          
+           <form action="/sendOrder" method="POST">
+                
+                
+                <% products.forEach(p => { %>
+                
+                <input type="text" value="<%- p.product_name%>"  class="orderDetail"  name="prueb" id="prueb"> <br>
+                
+                
+                <% })  %> 
+
+
+            <button type="submit">Enviar pedido</button>
+            </form>
+          
+           
+            <% }else{ %>
+            <h1>Por favor inicie sesion para ver los productos</h1>
+            <% } %>
+    </main>
+
+
+</body>
+</html>
