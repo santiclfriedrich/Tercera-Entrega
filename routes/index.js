@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { auth, isAdmin} from '../services.js';
-import {loadProduct, getProducts, addCart, getUserCart} from '../controllers/index.js'
-import { sendMail } from "../services.js";
-import util from 'util'
+import {loadProduct, getProducts, addCart, getCart} from '../controllers/index.js'
 
 
 const product_list = await getProducts()
@@ -16,7 +14,7 @@ router.get('/', (req, res) => {
     if(req.user){
       console.log('req session user', req.session.passport)
       res.render('index', {data : req.user, products: product_list})
-      console.log(req.session.passport)
+     
     }else{
       res.render('index', {data:undefined, products: undefined})
 
@@ -26,17 +24,7 @@ router.get('/', (req, res) => {
 
 router.post('/carrito/:id', addCart)
 
-router.get('/carrito', async (req, res) => {
-  const cart = await getUserCart(req.session.passport.user)
-
-  if(cart[0]){
-  res.render('cart', {data: req.user, products: cart[0].products})
-  }else{
-  res.render('error', {data: 'No agregaste productos al carrito'})
-
-  }
-
-})
+router.get('/carrito', getCart)
 
 router.get('/logOut', auth, (req, res) => {
   let user = req.session.user
@@ -68,8 +56,7 @@ router.get('/login-error', (req, res) => {
 })
 
 router.post('/sendOrder', async (req, res) => {
-  await sendMail(process.env.MAIL, `Pedido de: ${req.user.username}`, `Nuevo pedido:
-  ${req.body.prueb}`)
+  
   console.log('sending' , req.user.firstName)
   res.redirect('/')
 })
@@ -79,10 +66,6 @@ router.post('/sendOrder', async (req, res) => {
 router.get('*', (req,res) => {
   res.render('error', {data: 'Error 404 not found'})
 })
-
-
-
-
 
 
 export default router

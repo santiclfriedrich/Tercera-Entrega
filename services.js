@@ -52,7 +52,7 @@ function validatePass(req, res, next) {
 
 //// NODEMAILER 
 
-
+/*
 const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
@@ -77,7 +77,7 @@ const sendMail = async (mail, subject, body) => {
 
     const info = await transporter.sendMail(mailOptions)
 }
-
+*/
 
 
 export {
@@ -86,5 +86,4 @@ export {
     isValidPassword,
     validatePass,
     isAdmin,
-    sendMail
 }
