@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import {modelo, cart_model, products_model} from './models.js'
-import nodemailer from 'nodemailer'
+//import nodemailer from 'nodemailer'
 
 function auth(req, res, next) {
     if (req.user) {
@@ -48,6 +48,16 @@ function validatePass(req, res, next) {
     return next()
 }
 
+function isLogged(req, res, next) {
+
+    if(req.session.passport){
+        next()
+    }else{
+        res.render('error', {data: 'No estas logeado'})
+    }
+
+
+}
 
 
 //// NODEMAILER 
@@ -86,4 +96,5 @@ export {
     isValidPassword,
     validatePass,
     isAdmin,
+    isLogged
 }
